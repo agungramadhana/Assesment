@@ -10,7 +10,7 @@ namespace AssesmentPayment.Domain
 {
     public class Payment : BaseEntity, IEntity
     {
-        public Guid EventId { get; set; }
+        public Guid EventCategoryId { get; set; }
         public Guid UserId { get; set; }
         public Decimal Amount { get; set; }
         public StatusPaymentEnum StatusPayment { get; set; } = StatusPaymentEnum.Pending;
