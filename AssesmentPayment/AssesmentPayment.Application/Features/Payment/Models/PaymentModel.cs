@@ -1,18 +1,18 @@
-﻿using AssesmentPayment.Domain.Interfaces;
+﻿using AssesmentPayment.Domain;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AssesmentPayment.Domain
+namespace AssesmentPayment.Application.Features
 {
-    public class Payment : BaseEntity, IEntity
+    public class PaymentModel
     {
+        public Guid Id { get; set; }
         public Guid EventCategoryId { get; set; }
         public Guid UserId { get; set; }
         public decimal Amount { get; set; }
-        public StatusPaymentEnum StatusPayment { get; set; } = StatusPaymentEnum.Pending;
+        public StatusPaymentEnum PaymentStatus { get; set; }
     }
 }
