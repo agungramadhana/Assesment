@@ -1,4 +1,5 @@
-﻿using AssesmentEvent.Application.Features;
+﻿using AssesmentEvent.Application;
+using AssesmentEvent.Application.Features;
 using AssesmentEvent.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -33,12 +34,16 @@ namespace AssesmentEvent.WebApi.Controllers.v1
         [HttpPost]
         public async Task<IActionResult> CreateEvent([FromBody] CreateEventCommand request)
         {
+            if (!ModelState.IsValid) throw new BadRequestException("request invalid");
+
             return Ok(await Mediator.Send(request));
         }
 
         [HttpPost("order")]
         public async Task<IActionResult> CreateOrderEvent([FromBody] CreateOrderEventCommand request)
         {
+            if (!ModelState.IsValid) throw new BadRequestException("request invalid");
+
             return Ok(await Mediator.Send(request));
         }
     }
