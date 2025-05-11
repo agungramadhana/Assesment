@@ -22,7 +22,7 @@ namespace AssesmentUser.WebApi.Controllers.v1
             return Ok(await Mediator.Send(new GetListUserQuery()));
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(Guid id)
         {
             return Ok(await Mediator.Send(new GetUserByIdQuery

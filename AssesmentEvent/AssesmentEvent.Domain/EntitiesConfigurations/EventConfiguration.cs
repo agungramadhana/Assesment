@@ -1,4 +1,4 @@
-﻿using AssesmentEvent.Domain.Entities;
+﻿using AssesmentEvent.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;

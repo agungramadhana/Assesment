@@ -15,7 +15,7 @@ namespace AssesmentPayment.Domain.EntitiesConfigurations
             builder.ToTable($"Tr{nameof(Payment)}");
             builder.HasKey(x => x.Id);
             builder.HasIndex(x => x.Id);
-            builder.HasIndex(x => x.EventId);
+            builder.HasIndex(x => x.EventCategoryId);
             builder.HasIndex(x => x.UserId);
         }
     }

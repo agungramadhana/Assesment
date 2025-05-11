@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AssesmentEvent.Domain.Entities
+namespace AssesmentEvent.Domain
 {
     public class Event : BaseEntity, IEntity
     {

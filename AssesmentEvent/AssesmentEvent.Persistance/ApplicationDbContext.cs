@@ -1,6 +1,5 @@
 ﻿using AssesmentEvent.Application;
 using AssesmentEvent.Domain;
-using AssesmentEvent.Domain.Entities;
 using AssesmentEvent.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
