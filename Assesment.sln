@@ -39,6 +39,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssesmentPayment.Persistanc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssesmentPayment.WebApi", "AssesmentPayment\AssesmentPayment.WebApi\AssesmentPayment.WebApi.csproj", "{AB21DF7F-9162-002D-9AE8-B688EA4E35C0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssesmentShared", "AssesmentShared", "{095FD718-2961-40C6-8CFA-E38459EE517D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssesmentShared.Contract", "AssesmentShared\AssesmentShared.Contract\AssesmentShared.Contract.csproj", "{5D3D976A-C5C2-4973-9ABF-48744EF0313E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +109,10 @@ Global
 		{AB21DF7F-9162-002D-9AE8-B688EA4E35C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB21DF7F-9162-002D-9AE8-B688EA4E35C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB21DF7F-9162-002D-9AE8-B688EA4E35C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D3D976A-C5C2-4973-9ABF-48744EF0313E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D3D976A-C5C2-4973-9ABF-48744EF0313E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D3D976A-C5C2-4973-9ABF-48744EF0313E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D3D976A-C5C2-4973-9ABF-48744EF0313E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +133,7 @@ Global
 		{FE3E4251-B91F-25E6-1AFC-48EBF7478876} = {DB1B8EAD-F94E-46D4-985E-E8AE0A5398CC}
 		{107A3BFA-8B7F-3BDF-5E95-1B7C6288B857} = {DB1B8EAD-F94E-46D4-985E-E8AE0A5398CC}
 		{AB21DF7F-9162-002D-9AE8-B688EA4E35C0} = {DB1B8EAD-F94E-46D4-985E-E8AE0A5398CC}
+		{5D3D976A-C5C2-4973-9ABF-48744EF0313E} = {095FD718-2961-40C6-8CFA-E38459EE517D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {51170A59-B690-4862-868C-0DF5867B1448}

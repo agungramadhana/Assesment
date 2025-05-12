@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AssesmentEvent.Application\AssesmentEvent.Application.csproj" />
     <ProjectReference Include="..\AssesmentEvent.Persistance\AssesmentEvent.Persistance.csproj" />
+	  <ProjectReference Include="..\..\AssesmentShared\AssesmentShared.Contract\AssesmentShared.Contract.csproj" />
   </ItemGroup>
 
 </Project>

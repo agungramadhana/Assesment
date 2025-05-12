@@ -1,0 +1,18 @@
+﻿using MassTransit;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AssesmentShared.Contract
+{
+    public class PublishEventMessageModel
+    {
+        public Guid EventCategoryId { get; set; }
+        public Guid UserId { get; set; }
+        public decimal Amount { get; set; }
+        public EventPaymentEnum PaymentStatus { get; set; }
+
+    }
+}

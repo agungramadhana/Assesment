@@ -15,6 +15,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using AssesmentShared.Contract;
+using MassTransit;
 
 namespace AssesmentEvent.Infrastructure
 {
@@ -22,7 +24,42 @@ namespace AssesmentEvent.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            var rabbitMqSection = configuration.GetSection("RabbitMq");
+            var config = rabbitMqSection.Get<RabbitMqSettingModel>();
+
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<PaymentEventConsumer>();
+
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(config.Host, config.VirtualHost, h =>
+                    {
+                        h.Username(config.UserName);
+                        h.Password(config.Password);
+                    });
+
+                    cfg.Message<PaymentEventMessageModel>(m =>
+                    {
+                        m.SetEntityName("event-confirmation-payment");
+                    });
+
+                    cfg.ReceiveEndpoint("event-confirmation-payment-queue", e =>
+                    {
+                        e.ConfigureConsumer<PaymentEventConsumer>(context);
+                    });
+
+                    cfg.Message<PublishEventMessageModel>(m =>
+                    {
+                        m.SetEntityName("event-create-payment");
+                    });
+                });
+            });
+
+            services.AddMassTransitHostedService();
+
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<IPublishService, PublishService>();
 
             services.AddScoped<IJwtProvider, JwtProvider>();
             services.ConfigureOptions<JwtOptionSetup>();

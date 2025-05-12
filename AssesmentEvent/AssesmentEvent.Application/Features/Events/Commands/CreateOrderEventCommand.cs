@@ -1,5 +1,6 @@
 ﻿using AssesmentEvent.Domain;
 using AssesmentEvent.Domain.Enums;
+using AssesmentShared.Contract;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,12 +26,13 @@ namespace AssesmentEvent.Application.Features
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ICurrentUserService _currentUser;
+        private readonly IPublishService _publishService;
 
-
-        public CreateOrderEventCommandHandler(IApplicationDbContext dbContext, ICurrentUserService currentUser)
+        public CreateOrderEventCommandHandler(IApplicationDbContext dbContext, ICurrentUserService currentUser, IPublishService publishService)
         {
             _dbContext = dbContext;
             _currentUser = currentUser;
+            _publishService = publishService;
         }
 
         public async Task<Unit> Handle(CreateOrderEventCommand request, CancellationToken cancellationToken)
@@ -50,7 +52,7 @@ namespace AssesmentEvent.Application.Features
                 throw new NotFoundException("Event category not found");
 
             var reservedCount = eventCategory.EventRegistrations
-                .Count(y => y.PaymentStatus == EventPaymentEnum.Pending || y.PaymentStatus == EventPaymentEnum.Paid);
+                .Count(y => y.PaymentStatus == Domain.Enums.EventPaymentEnum.Pending || y.PaymentStatus == Domain.Enums.EventPaymentEnum.Paid);
 
             var availableTiket = eventCategory.Tiket - reservedCount;
 
@@ -63,13 +65,22 @@ namespace AssesmentEvent.Application.Features
                 {
                     EventCategoryId = request.Id,
                     UserId = Guid.Parse(_currentUser.IdUser),
-                    PaymentStatus = EventPaymentEnum.Pending
+                    PaymentStatus = Domain.Enums.EventPaymentEnum.Pending
                 });
             }
 
             await _dbContext.SaveChangesAsync();
 
             //pubsub to payment
+            var data = new PublishEventMessageModel
+            {
+                EventCategoryId = request.Id,
+                UserId = Guid.Parse(_currentUser.IdUser),
+                Amount = request.TotalTiket * eventCategory.Price,
+                PaymentStatus = AssesmentShared.Contract.EventPaymentEnum.Pending,
+            };
+
+            await _publishService.PublishMessage(data);
 
             return Unit.Value;
         }
