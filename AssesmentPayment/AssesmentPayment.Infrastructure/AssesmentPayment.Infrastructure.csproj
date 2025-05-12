@@ -11,11 +11,13 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.2.0" />
+	  <PackageReference Include="MassTransit" Version="8.4.0" />
+	  <PackageReference Include="MassTransit.RabbitMQ" Version="8.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\AssesmentShared\AssesmentShared.Contract\AssesmentShared.Contract.csproj" />
     <ProjectReference Include="..\AssesmentPayment.Application\AssesmentPayment.Application.csproj" />
     <ProjectReference Include="..\AssesmentPayment.Persistance\AssesmentPayment.Persistance.csproj" />
   </ItemGroup>

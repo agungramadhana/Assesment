@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AssesmentShared.Contract;
 
 namespace AssesmentPayment.Application.Features
 {
@@ -23,10 +24,13 @@ namespace AssesmentPayment.Application.Features
     public class UpdatePaymentCommandHandler : IRequestHandler<UpdatePaymentCommand>
     {
         private readonly IApplicationDbContext _dbContext;
-
-        public UpdatePaymentCommandHandler(IApplicationDbContext dbContext)
+        private readonly ICurrentUserService _currentUser;
+        private readonly IPublishService _publishService;
+        public UpdatePaymentCommandHandler(IApplicationDbContext dbContext, ICurrentUserService currentUser, IPublishService publishService)
         {
             _dbContext = dbContext;
+            _currentUser = currentUser;
+            _publishService = publishService;
         }
 
         public async Task<Unit> Handle(UpdatePaymentCommand request, CancellationToken cancellationToken)
@@ -35,13 +39,21 @@ namespace AssesmentPayment.Application.Features
 
             if (query is null) throw new NotFoundException("Payment not found");
 
-            query.PaymentStatus = EventPaymentEnum.Paid;
+            query.PaymentStatus = Domain.EventPaymentEnum.Paid;
 
             _dbContext.Entity<Payment>().Update(query);
 
             await _dbContext.SaveChangesAsync();
 
             //pubsub to event category
+            var message = new PaymentEventMessageModel
+            {
+                EventCategoryId = request.EventCategoryId,
+                UserId = Guid.Parse(_currentUser.IdUser),
+                PaymentStatus = AssesmentShared.Contract.EventPaymentEnum.Paid
+            };
+
+            await _publishService.PublishMessage(message);
 
             return Unit.Value;
         }
