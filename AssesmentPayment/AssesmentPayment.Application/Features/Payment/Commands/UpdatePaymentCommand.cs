@@ -35,7 +35,7 @@ namespace AssesmentPayment.Application.Features
 
             if (query is null) throw new NotFoundException("Payment not found");
 
-            query.StatusPayment = StatusPaymentEnum.Paid;
+            query.PaymentStatus = EventPaymentEnum.Paid;
 
             _dbContext.Entity<Payment>().Update(query);
 

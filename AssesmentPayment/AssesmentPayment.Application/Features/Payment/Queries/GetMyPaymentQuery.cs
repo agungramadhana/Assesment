@@ -35,7 +35,7 @@ namespace AssesmentPayment.Application.Features
                     EventCategoryId = x.EventCategoryId,
                     UserId = x.UserId,
                     Amount = x.Amount,
-                    PaymentStatus = x.StatusPayment
+                    PaymentStatus = x.PaymentStatus
                 })
                 .ToListAsync();
 

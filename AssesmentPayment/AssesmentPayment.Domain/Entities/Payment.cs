@@ -13,6 +13,6 @@ namespace AssesmentPayment.Domain
         public Guid EventCategoryId { get; set; }
         public Guid UserId { get; set; }
         public decimal Amount { get; set; }
-        public StatusPaymentEnum StatusPayment { get; set; } = StatusPaymentEnum.Pending;
+        public EventPaymentEnum PaymentStatus { get; set; } = EventPaymentEnum.Pending;
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AssesmentPayment.Domain
 {
-    public enum StatusPaymentEnum
+    public enum EventPaymentEnum
     {
         [Description("Pending")]
         Pending,

@@ -13,7 +13,7 @@ namespace AssesmentEvent.Domain
     {
         public Guid EventCategoryId { get; set; }
         public Guid UserId { get; set; }
-        public EventPaymentEnum PaymentStatus { get; set; }
+        public EventPaymentEnum PaymentStatus { get; set; } = EventPaymentEnum.Pending;
 
         [ForeignKey(nameof(EventCategoryId))]
         public virtual EventCategories EventCategories { get; set; }
