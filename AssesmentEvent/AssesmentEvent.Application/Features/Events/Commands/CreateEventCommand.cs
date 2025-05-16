@@ -24,7 +24,8 @@ namespace AssesmentEvent.Application.Features
 
         public async Task<Unit> Handle(CreateEventCommand request, CancellationToken cancellationToken)
         {
-            var eventChecking = await _dbContext.Entity<Event>().AnyAsync(x => x.Title.ToLower().Contains(request.Title.ToLower()));
+            var eventChecking = await _dbContext.Entity<Event>()
+                .AnyAsync(x => x.Title.ToLower().Contains(request.Title.ToLower()) && !x.IsDeleted);
 
             if (eventChecking) throw new BadRequestException("Event already exist");
 

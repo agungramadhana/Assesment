@@ -30,7 +30,7 @@ namespace AssesmentEvent.Application.Features
             var query = await _dbContext.Entity<Event>()
                 .Include(x => x.EventCategories)
                     .ThenInclude(x => x.EventRegistrations)
-                .FirstOrDefaultAsync(x => x.Id == request.Id);
+                .FirstOrDefaultAsync(x => x.Id == request.Id && !x.IsDeleted);
 
             if (query is null) throw new NotFoundException("Event not found");
 
