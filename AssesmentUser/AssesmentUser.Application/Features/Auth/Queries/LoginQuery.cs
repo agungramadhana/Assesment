@@ -27,7 +27,8 @@ namespace AssesmentUser.Application.Features.Auth.Queries
 
         public async Task<string> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
-            var query = _dbContext.Entity<Domain.User>().FirstOrDefault(x => x.Email!.ToLower().Contains(request.Email!.ToLower()));
+            var query = _dbContext.Entity<Domain.User>()
+                .FirstOrDefault(x => x.Email!.ToLower().Contains(request.Email!.ToLower()) && !x.IsDeleted);
 
             if (query is null)
                 throw new BadRequestException("email or password is not correct");
