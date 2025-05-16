@@ -28,7 +28,7 @@ namespace AssesmentPayment.Application.Features
         public async Task<List<PaymentModel>> Handle(GetMyPaymentQuery request, CancellationToken cancellationToken)
         {
             var query = await _dbContext.Entity<Payment>()
-                .Where(x => x.UserId == Guid.Parse(_currentUser.IdUser))
+                .Where(x => x.UserId == Guid.Parse(_currentUser.IdUser) && !x.IsDeleted)
                 .Select(x => new PaymentModel
                 {
                     Id = x.Id,
