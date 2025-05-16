@@ -35,7 +35,7 @@ namespace AssesmentPayment.Application.Features
 
         public async Task<Unit> Handle(UpdatePaymentCommand request, CancellationToken cancellationToken)
         {
-            var query = await _dbContext.Entity<Payment>().FirstOrDefaultAsync(x => x.Id == request.Id);
+            var query = await _dbContext.Entity<Payment>().FirstOrDefaultAsync(x => x.Id == request.Id && !x.IsDeleted);
 
             if (query is null) throw new NotFoundException("Payment not found");
 

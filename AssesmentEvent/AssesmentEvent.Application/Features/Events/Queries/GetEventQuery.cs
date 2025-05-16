@@ -30,6 +30,7 @@ namespace AssesmentEvent.Application.Features
                 .Include(x => x.EventCategories)
                     .ThenInclude(x => x.EventRegistrations)
                 .OrderByDescending(x => x.CreatedAt)
+                .Where(x => !x.IsDeleted)
                 .Select(x => new EventModel
                 {
                     Id = x.Id,

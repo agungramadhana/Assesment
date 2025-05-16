@@ -19,32 +19,113 @@ namespace AssesmentEvent.WebApi.Controllers.v1
         [HttpGet]
         public async Task<IActionResult> GetEvent()
         {
-            return Ok(await Mediator.Send(new GetEventQuery()));
+            try
+            {
+                return Ok(await Mediator.Send(new GetEventQuery()));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new BadRequestException(ex.Message);                
+            }
         }
 
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetEventById(Guid Id)
         {
-            return Ok(await Mediator.Send(new GetEventByIdQuery
+            try
             {
-                Id = Id
-            }));
+                return Ok(await Mediator.Send(new GetEventByIdQuery
+                {
+                    Id = Id
+                }));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new BadRequestException(ex.Message);
+            }   
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateEvent([FromBody] CreateEventCommand request)
         {
-            if (!ModelState.IsValid) throw new BadRequestException("request invalid");
+            try
+            {
+                if (!ModelState.IsValid) throw new BadRequestException("request invalid");
 
-            return Ok(await Mediator.Send(request));
+                return Ok(await Mediator.Send(request));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new BadRequestException(ex.Message);
+            }
         }
 
         [HttpPost("order")]
         public async Task<IActionResult> CreateOrderEvent([FromBody] CreateOrderEventCommand request)
         {
-            if (!ModelState.IsValid) throw new BadRequestException("request invalid");
+            try
+            {
+                if(!ModelState.IsValid) throw new BadRequestException("request invalid");
 
-            return Ok(await Mediator.Send(request));
+                return Ok(await Mediator.Send(request));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new BadRequestException(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateEvent([FromBody] UpdateEventCommand request)
+        {
+            try
+            {
+                if (!ModelState.IsValid) throw new BadRequestException("request invalid");
+
+                return Ok(await Mediator.Send(request));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new BadRequestException(ex.Message);
+            }
+        }
+
+        [HttpPut("update-category")]
+        public async Task<IActionResult> UpdateEventCategory([FromBody] UpdateEventCategoryCommand request)
+        {
+            try
+            {
+                if (!ModelState.IsValid) throw new BadRequestException("request invalid");
+
+                return Ok(await Mediator.Send(request));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new BadRequestException(ex.Message);
+            }
+        }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteEventById(Guid Id)
+        {
+            try
+            {
+                return Ok(await Mediator.Send(new DeleteEventCommand
+                {
+                    Id = Id
+                }));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new BadRequestException(ex.Message);
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using AssesmentUser.Application.Features;
+﻿using AssesmentUser.Application;
+using AssesmentUser.Application.Features;
 using AssesmentUser.Application.Features.User.Commands;
+using Azure.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,31 +21,63 @@ namespace AssesmentUser.WebApi.Controllers.v1
         [HttpGet]
         public async Task<IActionResult> GetListUser()
         {
-            return Ok(await Mediator.Send(new GetListUserQuery()));
+            try
+            {
+                return Ok(await Mediator.Send(new GetListUserQuery()));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new BadRequestException(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(Guid id)
         {
-            return Ok(await Mediator.Send(new GetUserByIdQuery
+            try
             {
-                Id = id
-            }));
+                return Ok(await Mediator.Send(new GetUserByIdQuery
+                {
+                    Id = id
+                }));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new BadRequestException(ex.Message);
+            }
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserQuery request)
         {
-            return Ok(await Mediator.Send(request));
+            try
+            {
+                return Ok(await Mediator.Send(request));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new BadRequestException(ex.Message);
+            }
         }
 
         [HttpDelete("id")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
-            return Ok(await Mediator.Send(new DeleteUserQuery
+            try
             {
-                Id = id
-            }));
+                return Ok(await Mediator.Send(new DeleteUserQuery
+                {
+                    Id = id
+                }));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new BadRequestException(ex.Message);
+            }
         }
     }
 }
