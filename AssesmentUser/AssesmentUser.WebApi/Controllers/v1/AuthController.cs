@@ -18,19 +18,32 @@ namespace AssesmentUser.WebApi.Controllers.v1
         [HttpPost(template: "login")]
         public async Task<ActionResult> Login([FromBody] LoginQuery login)
         {
-            return Ok(await Mediator.Send(login));
+            try
+            {
+                return Ok(await Mediator.Send(login));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new BadRequestException(ex.Message);
+            }
         }
 
         [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
         [HttpPost(template: "register")]
         public async Task<ActionResult> register([FromBody] RegisterCommand request)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                throw new BadRequestException("Request invalid");
+                if (!ModelState.IsValid) throw new BadRequestException("Request invalid");
+
+                return Ok(await Mediator.Send(request));
             }
-             
-            return Ok(await Mediator.Send(request));
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw new BadRequestException(ex.Message);
+            }
         }
     }
 }
