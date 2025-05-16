@@ -39,6 +39,8 @@ namespace AssesmentPayment.Application.Features
                 })
                 .ToListAsync();
 
+            if (query is null) throw new NotFoundException("payment not found");
+
             return query;
         }
     }
